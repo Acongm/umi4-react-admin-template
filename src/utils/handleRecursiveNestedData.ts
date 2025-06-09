@@ -8,7 +8,6 @@ const handleRecursiveNestedData = (
   data: API.MenuItem[],
   datumCb: (datum: API.MenuItem) => API.MenuItem,
 ): API.MenuItem[] => {
-
   const res = [] as API.MenuItem[];
 
   for (const datum of data) {

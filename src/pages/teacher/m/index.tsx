@@ -1,10 +1,7 @@
-import type { FC } from 'react';
+import type { FC } from "react";
 
 const Index: FC = () => {
-
-  return (
-    <div>/teacher/m</div>
-  );
+  return <div>/teacher/m</div>;
 };
 
 export default Index;

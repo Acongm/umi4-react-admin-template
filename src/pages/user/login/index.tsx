@@ -42,8 +42,8 @@ const Index: FC<UserConnectedProps> = (props) => {
           title="Ant Design"
           subTitle="Ant Design 是西湖区最具影响力的 Web 设计规范"
           initialValues={{
-            username: 'admin',
-            password: 'ant.design',
+            username: "admin",
+            password: "ant.design",
             autoLogin: true,
           }}
           submitter={{

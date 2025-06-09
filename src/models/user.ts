@@ -1,13 +1,16 @@
-import { history } from 'umi';
+import { history } from "umi";
 import {
-  userLogin, retrieveUserInfo, retrieveUserInfoAuthorityMenu, userLogout,
+  userLogin,
+  retrieveUserInfo,
+  retrieveUserInfoAuthorityMenu,
+  userLogout,
   retrieveUserAuthorityMenu,
-} from '@/services/user';
-import type { Effect, Reducer, ConnectProps } from 'umi';
-import handleRedirect from '@/utils/handleRedirect';
-import handleGetRootSubmenuKeys from '@/utils/handleGetRootSubmenuKeys';
-import handleGetEachDatumFromNestedDataByKey from '@/utils/handleGetEachDatumFromNestedDataByKey';
-import handleGetIndexValidMenuItemByPath from '@/utils/handleGetIndexValidMenuItemByPath';
+} from "@/services/user";
+import type { Effect, Reducer, ConnectProps } from "umi";
+import handleRedirect from "@/utils/handleRedirect";
+import handleGetRootSubmenuKeys from "@/utils/handleGetRootSubmenuKeys";
+import handleGetEachDatumFromNestedDataByKey from "@/utils/handleGetEachDatumFromNestedDataByKey";
+import handleGetIndexValidMenuItemByPath from "@/utils/handleGetIndexValidMenuItemByPath";
 
 /**
  * 全局用户数据
@@ -30,17 +33,17 @@ type UserModelState = {
   loginBtnLoading: boolean;
   rootSubmenuKeys: React.Key[];
   layoutWrapperLoading: boolean;
-  indexAllMenuItemById: IndexAllMenuItemByKey<'id'>;
+  indexAllMenuItemById: IndexAllMenuItemByKey<"id">;
   indexValidMenuItemByPath: IndexValidMenuItemByPath;
-  indexAllMenuItemByPath: IndexAllMenuItemByKey<'path'>;
-}
+  indexAllMenuItemByPath: IndexAllMenuItemByKey<"path">;
+};
 
 export type UserConnectedProps = {
   user: UserModelState;
 } & ConnectProps;
 
 type UserModelType = {
-  namespace: 'user';
+  namespace: "user";
   state: UserModelState;
   effects: {
     login: Effect;
@@ -51,16 +54,16 @@ type UserModelType = {
   reducers: {
     save: Reducer<UserModelState>;
   };
-}
+};
 
 /**
  * 请求顺序
  * @description 并发 | 继发
  */
-type ReqOrder = 'concurrent' | 'relay';
+type ReqOrder = "concurrent" | "relay";
 
 const UserModel: UserModelType = {
-  namespace: 'user',
+  namespace: "user",
   state: {
     data: {},
     authority: [],
@@ -71,46 +74,45 @@ const UserModel: UserModelType = {
     menu: [
       {
         id: 1,
-        key: '1',
-        path: '/',
-        label: '首页',
-        redirect: '',
+        key: "1",
+        path: "/",
+        label: "首页",
+        redirect: "",
       },
     ],
     indexAllMenuItemById: {
       1: {
         id: 1,
-        key: '1',
-        path: '/',
-        label: '首页',
-        redirect: '',
+        key: "1",
+        path: "/",
+        label: "首页",
+        redirect: "",
       },
     },
     indexAllMenuItemByPath: {
-      '/': {
+      "/": {
         id: 1,
-        key: '1',
-        path: '/',
-        label: '首页',
-        redirect: '',
+        key: "1",
+        path: "/",
+        label: "首页",
+        redirect: "",
       },
     },
     indexValidMenuItemByPath: {
-      '/': {
+      "/": {
         id: 1,
-        key: '1',
-        path: '/',
-        label: '首页',
-        redirect: '',
+        key: "1",
+        path: "/",
+        label: "首页",
+        redirect: "",
       },
     },
   },
   effects: {
     //登录
     *login({ payload }, { call, put }) {
-
       yield put({
-        type: 'save',
+        type: "save",
         payload: {
           loginBtnLoading: true,
         },
@@ -120,17 +122,17 @@ const UserModel: UserModelType = {
 
       //登录成功之后设置token并获取用户信息等数据
       if (!res.code) {
-        localStorage.setItem('Authorization', res.data.token);
+        localStorage.setItem("Authorization", res.data.token);
 
         yield put({
-          type: 'getUserInfoAuthorityMenu',
+          type: "getUserInfoAuthorityMenu",
           payload: {
-            type: 'concurrent',
+            type: "concurrent",
           },
         });
       } else {
         yield put({
-          type: 'save',
+          type: "save",
           payload: {
             loginBtnLoading: false,
           },
@@ -140,11 +142,11 @@ const UserModel: UserModelType = {
     //获取用户信息和权限以及菜单
     *getUserInfoAuthorityMenu({ payload }, { call, put }) {
       const { type }: { type: ReqOrder } = payload;
-      
+
       let userInfoRes: API.UserInfoResponse = {
         data: {},
         code: 0,
-        message: '',
+        message: "",
       };
 
       let userAuthorityRes: API.UserAuthorityResponse = {
@@ -152,18 +154,20 @@ const UserModel: UserModelType = {
           authority: [],
         },
         code: 0,
-        message: '',
+        message: "",
       };
 
       let menuRes: API.MenuDataResponse = {
         data: [],
         code: 0,
-        message: '',
+        message: "",
       };
 
       //用户在登录页登录完成之后执行
-      if (type === 'concurrent') {
-        const res: API.UserInfoAuthMenuResponse = yield call(retrieveUserInfoAuthorityMenu);
+      if (type === "concurrent") {
+        const res: API.UserInfoAuthMenuResponse = yield call(
+          retrieveUserInfoAuthorityMenu,
+        );
         userInfoRes = res[0] as API.UserInfoResponse;
         userAuthorityRes = res[1] as API.UserAuthorityResponse;
         menuRes = res[2] as API.MenuDataResponse;
@@ -174,7 +178,7 @@ const UserModel: UserModelType = {
         } catch (error) {
           //接口报错了, 比如返回了401
           yield put({
-            type: 'save',
+            type: "save",
             payload: {
               layoutWrapperLoading: false,
             },
@@ -183,24 +187,31 @@ const UserModel: UserModelType = {
           return false;
         }
 
-        const res: API.UserAuthMenuResponse = yield call(retrieveUserAuthorityMenu);
+        const res: API.UserAuthMenuResponse = yield call(
+          retrieveUserAuthorityMenu,
+        );
         userAuthorityRes = res[0] as API.UserAuthorityResponse;
         menuRes = res[1] as API.MenuDataResponse;
       }
 
-      const indexAllMenuItemByPath = handleGetEachDatumFromNestedDataByKey(menuRes.data, 'path');
-      const indexValidMenuItemByPath = handleGetIndexValidMenuItemByPath(menuRes.data);
+      const indexAllMenuItemByPath = handleGetEachDatumFromNestedDataByKey(
+        menuRes.data,
+        "path",
+      );
+      const indexValidMenuItemByPath = handleGetIndexValidMenuItemByPath(
+        menuRes.data,
+      );
 
       //在登录完获取菜单数据之后做是否需要重定向的操作
       yield call(
         handleRedirect,
-        window.location.pathname === '/user/login',
+        window.location.pathname === "/user/login",
         indexAllMenuItemByPath,
         indexValidMenuItemByPath,
       );
 
       yield put({
-        type: 'save',
+        type: "save",
         payload: {
           isLogin: true,
           menu: menuRes.data,
@@ -211,7 +222,10 @@ const UserModel: UserModelType = {
           layoutWrapperLoading: false,
           authority: userAuthorityRes.data.authority,
           rootSubmenuKeys: handleGetRootSubmenuKeys(menuRes.data),
-          indexAllMenuItemById: handleGetEachDatumFromNestedDataByKey(menuRes.data, 'id'),
+          indexAllMenuItemById: handleGetEachDatumFromNestedDataByKey(
+            menuRes.data,
+            "id",
+          ),
         },
       });
 
@@ -224,28 +238,30 @@ const UserModel: UserModelType = {
 
       if (!res.code) {
         yield put({
-          type: 'resetLoginStatus',
+          type: "resetLoginStatus",
         });
       }
     },
     //重置登录状态
     *resetLoginStatus(_, { put }) {
-      localStorage.removeItem('Authorization');
-      
+      localStorage.removeItem("Authorization");
+
       yield put({
-        type: 'save',
+        type: "save",
         payload: {
           isLogin: false,
           loginBtnLoading: false,
         },
       });
-      
+
       //当前页面不是登录页, 且没有redirect参数的时候再设置redirect参数
       //而且这个redirect参数要包含url pathname和查询字符串参数, 即pathname及其后面的所有字符
-      if (window.location.pathname !== '/user/login') {
+      if (window.location.pathname !== "/user/login") {
         if (!/redirect=/.test(window.location.search)) {
           const redirectValue = `${window.location.pathname}${window.location.search}`;
-          history.push(`/user/login?redirect=${encodeURIComponent(redirectValue)}`);
+          history.push(
+            `/user/login?redirect=${encodeURIComponent(redirectValue)}`,
+          );
         }
       }
     },

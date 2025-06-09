@@ -1,10 +1,10 @@
-import { Fragment, useEffect } from 'react';
-import type { FC, ReactElement } from 'react';
-import { Spin } from 'antd';
-import { Helmet, useLocation, connect } from 'umi';
-import type { UserConnectedProps } from '@/models/user';
-import LoginPage from '@/pages/user/login';
-import cfg from '../../config/config';
+import { Fragment, useEffect } from "react";
+import type { FC, ReactElement } from "react";
+import { Spin } from "antd";
+import { Helmet, useLocation, connect } from "umi";
+import type { UserConnectedProps } from "@/models/user";
+import LoginPage from "@/pages/user/login";
+import cfg from "../../config/config";
 
 type Props = {
   children: ReactElement;
@@ -14,36 +14,34 @@ type Props = {
 const LayoutWrapper: FC<Props> = (props) => {
   const { pathname } = useLocation();
   const {
-    dispatch, children,
+    dispatch,
+    children,
     user: { isLogin, layoutWrapperLoading, indexValidMenuItemByPath },
   } = props;
   const tabTitle = indexValidMenuItemByPath[pathname]?.label;
   const projectTitle = cfg.title;
   const title = tabTitle ? `${tabTitle} - ${projectTitle}` : projectTitle;
 
-  useEffect(
-    () => {
-      //调用户信息相关接口查询登录状态(401表示未登录)
-      dispatch?.({
-        type: 'user/getUserInfoAuthorityMenu',
-        payload: {
-          type: 'relay',
-        },
-      });
-    },
-    [ dispatch ],
-  );
+  useEffect(() => {
+    //调用户信息相关接口查询登录状态(401表示未登录)
+    dispatch?.({
+      type: "user/getUserInfoAuthorityMenu",
+      payload: {
+        type: "relay",
+      },
+    });
+  }, [dispatch]);
 
   //进任何页面都需要先loading
   let pageContent = (
     <Spin
       size="large"
       style={{
-        width: '100vw',
-        height: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        width: "100vw",
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
       }}
     />
   );
@@ -70,7 +68,7 @@ const LayoutWrapper: FC<Props> = (props) => {
    */
   if (!layoutWrapperLoading) {
     if (isLogin) {
-      if (pathname !== '/user/login') {
+      if (pathname !== "/user/login") {
         pageContent = children;
       }
     } else {
@@ -89,8 +87,6 @@ const LayoutWrapper: FC<Props> = (props) => {
   );
 };
 
-export default connect(
-  ({ user }: { user: UserConnectedProps['user'] }) => ({
-    user,
-  }),
-)(LayoutWrapper);
+export default connect(({ user }: { user: UserConnectedProps["user"] }) => ({
+  user,
+}))(LayoutWrapper);

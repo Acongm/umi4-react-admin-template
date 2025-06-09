@@ -8,7 +8,7 @@
  */
 const handleGetCurrentLocation = (
   currentMenuItem: API.MenuItem | undefined,
-  indexAllMenuItemById: IndexAllMenuItemByKey<'id'>,
+  indexAllMenuItemById: IndexAllMenuItemByKey<"id">,
 ): API.MenuItem[] | [] => {
   let res: API.MenuItem[] = [];
 
@@ -25,7 +25,10 @@ const handleGetCurrentLocation = (
   if (currentMenuItem.pid) {
     res = [
       ...res,
-      ...handleGetCurrentLocation(indexAllMenuItemById[currentMenuItem.pid], indexAllMenuItemById),
+      ...handleGetCurrentLocation(
+        indexAllMenuItemById[currentMenuItem.pid],
+        indexAllMenuItemById,
+      ),
     ];
   }
 

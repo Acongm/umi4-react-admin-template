@@ -1,4 +1,4 @@
-import { history } from 'umi';
+import { history } from "umi";
 
 /**
  * 重定向的方法
@@ -13,18 +13,18 @@ import { history } from 'umi';
  */
 const handleRedirect = (
   isLoginPage: boolean,
-  indexAllMenuItemByPath: IndexAllMenuItemByKey<'path'>,
+  indexAllMenuItemByPath: IndexAllMenuItemByKey<"path">,
   indexValidMenuItemByPath: IndexValidMenuItemByPath,
-): Promise<boolean> => (
+): Promise<boolean> =>
   new Promise((resolve) => {
     let routePath = Object.keys(indexValidMenuItemByPath)[0];
 
     if (isLoginPage) {
       const queryString = window.location.search;
-  
+
       if (queryString) {
         const matchedRes = queryString.match(/redirect=(.*)/);
-  
+
         if (matchedRes) {
           //还要考虑redirect参数是否有效
           const decodeRedirect = decodeURIComponent(matchedRes[1]);
@@ -63,7 +63,6 @@ const handleRedirect = (
     history.push(routePath);
 
     return resolve(true);
-  })
-);
+  });
 
 export default handleRedirect;

@@ -1,8 +1,8 @@
-import type { FC, ReactElement } from 'react';
-import { connect, history, useLocation } from 'umi';
-import { Button, Result } from 'antd';
-import authority from '@/pages/authority';
-import type { UserConnectedProps } from '@/models/user';
+import type { FC, ReactElement } from "react";
+import { connect, history, useLocation } from "umi";
+import { Button, Result } from "antd";
+import authority from "@/pages/authority";
+import type { UserConnectedProps } from "@/models/user";
 
 type Props = {
   children: ReactElement;
@@ -16,7 +16,9 @@ const PageAccess: FC<Props> = (props): ReactElement | null => {
   //可选操作符用来处理子路由跳转的情形, 因为这里的权限都是有效路由的权限,
   //当遇到输入的是菜单组件中可展开的节点的path的时候就没有权限了, 此时可能会报错,
   //加可选操作符可避免这个报错导致的页面渲染问题
-  const accessible = authority[pathname]?.some((item: string) => userAuthority.includes(item));
+  const accessible = authority[pathname]?.some((item: string) =>
+    userAuthority.includes(item),
+  );
 
   let res = children;
 
@@ -26,14 +28,11 @@ const PageAccess: FC<Props> = (props): ReactElement | null => {
         title="403"
         status="403"
         subTitle="对不起, 您没有访问此页面的权限"
-        extra={(
-          <Button
-            type="primary"
-            onClick={
-              () => history.push('/')
-            }
-          >返回首页</Button>
-        )}
+        extra={
+          <Button type="primary" onClick={() => history.push("/")}>
+            返回首页
+          </Button>
+        }
       />
     );
   }
@@ -41,8 +40,6 @@ const PageAccess: FC<Props> = (props): ReactElement | null => {
   return res;
 };
 
-export default connect(
-  ({ user }: { user: UserConnectedProps['user'] }) => ({
-    user,
-  }),
-)(PageAccess);
+export default connect(({ user }: { user: UserConnectedProps["user"] }) => ({
+  user,
+}))(PageAccess);

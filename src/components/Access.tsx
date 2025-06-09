@@ -1,6 +1,6 @@
-import type { FC, ReactElement } from 'react';
-import { connect } from 'umi';
-import type { UserConnectedProps } from '@/models/user';
+import type { FC, ReactElement } from "react";
+import { connect } from "umi";
+import type { UserConnectedProps } from "@/models/user";
 
 type Props = {
   authority: string;
@@ -25,8 +25,6 @@ const Access: FC<Props> = (props): ReactElement | null => {
   return res;
 };
 
-export default connect(
-  ({ user }: { user: UserConnectedProps['user'] }) => ({
-    user,
-  }),
-)(Access);
+export default connect(({ user }: { user: UserConnectedProps["user"] }) => ({
+  user,
+}))(Access);
