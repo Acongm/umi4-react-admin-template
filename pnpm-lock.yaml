@@ -28,7 +28,7 @@ importers:
         version: 3.0.0-alpha.1(react-dom@18.3.1(react@18.3.1))(react-router@6.3.0(react@18.3.1))(react@18.3.1)
       umi:
         specifier: ^4.3.24
-        version: 4.4.11(@babel/core@7.27.4)(@types/node@22.15.30)(@types/react@18.3.23)(eslint@9.28.0(jiti@1.21.7))(lightningcss@1.22.1)(prettier@2.8.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@3.29.5)(stylelint@15.11.0(typescript@5.8.3))(terser@5.41.0)(type-fest@1.4.0)(typescript@5.8.3)(webpack@5.99.9)
+        version: 4.4.11(@babel/core@7.27.4)(@types/node@22.15.30)(@types/react@18.3.23)(eslint@9.28.0(jiti@1.21.7))(lightningcss@1.22.1)(prettier@3.5.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@3.29.5)(stylelint@15.11.0(typescript@5.8.3))(terser@5.41.0)(type-fest@1.4.0)(typescript@5.8.3)(webpack@5.99.9)
     devDependencies:
       '@types/express':
         specifier: ^5.0.0
@@ -61,13 +61,16 @@ importers:
         specifier: ^4.6.2
         version: 4.6.2(eslint@9.28.0(jiti@1.21.7))
       husky:
-        specifier: ^9.1.6
+        specifier: ^9.1.7
         version: 9.1.7
       lint-staged:
         specifier: 15.5.2
         version: 15.5.2
+      prettier:
+        specifier: ^3.5.3
+        version: 3.5.3
       typescript:
-        specifier: ^5.6.2
+        specifier: ^5
         version: 5.8.3
 
 packages:
@@ -5405,6 +5408,11 @@ packages:
   prettier@2.8.8:
     resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
     engines: {node: '>=10.13.0'}
+    hasBin: true
+
+  prettier@3.5.3:
+    resolution: {integrity: sha512-QQtaxnoDJeAkDvDKWCLiwIXkTgRhwYDEQCghU9Z6q03iyek/rxRh/2lC3HB7P8sWT2xC/y5JDctPLBIGzHKbhw==}
+    engines: {node: '>=14'}
     hasBin: true
 
   pretty-error@4.0.0:
@@ -13483,12 +13491,17 @@ snapshots:
       prettier: 2.8.8
       typescript: 5.8.3
 
-  prettier-plugin-packagejson@2.4.3(prettier@2.8.8):
+  prettier-plugin-organize-imports@3.2.4(prettier@3.5.3)(typescript@5.8.3):
+    dependencies:
+      prettier: 3.5.3
+      typescript: 5.8.3
+
+  prettier-plugin-packagejson@2.4.3(prettier@3.5.3):
     dependencies:
       sort-package-json: 2.4.1
       synckit: 0.8.5
     optionalDependencies:
-      prettier: 2.8.8
+      prettier: 3.5.3
 
   prettier-plugin-two-style-order@1.0.1(prettier@2.8.8):
     dependencies:
@@ -13498,6 +13511,8 @@ snapshots:
       prettier: 2.8.8
 
   prettier@2.8.8: {}
+
+  prettier@3.5.3: {}
 
   pretty-error@4.0.0:
     dependencies:
@@ -14960,7 +14975,7 @@ snapshots:
 
   typescript@5.8.3: {}
 
-  umi@4.4.11(@babel/core@7.27.4)(@types/node@22.15.30)(@types/react@18.3.23)(eslint@9.28.0(jiti@1.21.7))(lightningcss@1.22.1)(prettier@2.8.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@3.29.5)(stylelint@15.11.0(typescript@5.8.3))(terser@5.41.0)(type-fest@1.4.0)(typescript@5.8.3)(webpack@5.99.9):
+  umi@4.4.11(@babel/core@7.27.4)(@types/node@22.15.30)(@types/react@18.3.23)(eslint@9.28.0(jiti@1.21.7))(lightningcss@1.22.1)(prettier@3.5.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@3.29.5)(stylelint@15.11.0(typescript@5.8.3))(terser@5.41.0)(type-fest@1.4.0)(typescript@5.8.3)(webpack@5.99.9):
     dependencies:
       '@babel/runtime': 7.23.6
       '@umijs/bundler-utils': 4.4.11
@@ -14972,8 +14987,8 @@ snapshots:
       '@umijs/server': 4.4.11
       '@umijs/test': 4.4.11(@babel/core@7.27.4)
       '@umijs/utils': 4.4.11
-      prettier-plugin-organize-imports: 3.2.4(prettier@2.8.8)(typescript@5.8.3)
-      prettier-plugin-packagejson: 2.4.3(prettier@2.8.8)
+      prettier-plugin-organize-imports: 3.2.4(prettier@3.5.3)(typescript@5.8.3)
+      prettier-plugin-packagejson: 2.4.3(prettier@3.5.3)
     transitivePeerDependencies:
       - '@babel/core'
       - '@rspack/core'

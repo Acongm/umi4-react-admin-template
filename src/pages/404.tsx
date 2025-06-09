@@ -4,7 +4,7 @@ import { Button, Result } from 'antd';
 
 const _404: FC = () => {
 
-  return (
+      return (
     <Result
       title="404"
       status="404"

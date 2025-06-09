@@ -6,8 +6,10 @@
     "analyze": "ANALYZE=1 umi build",
     "build": "umi build",
     "setup": "umi setup",
+    "lint-staged": "lint-staged",
     "postinstall": "umi setup",
-    "prepare": "husky"
+    "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@ant-design/icons": "^5.5.1",
@@ -29,8 +31,20 @@
     "eslint": "^9.12.0",
     "eslint-plugin-react": "^7.37.1",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "husky": "^9.1.6",
+    "husky": "^9.1.7",
     "lint-staged": "15.5.2",
-    "typescript": "^5.6.2"
+    "prettier": "^3.5.3",
+    "typescript": "^5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/​**​/*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   }
 }

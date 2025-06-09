@@ -12,3 +12,6 @@
 !README-en_US.md
 *.log
 .env
+!.husky
+!.husky/_
+!.husky/_/*
