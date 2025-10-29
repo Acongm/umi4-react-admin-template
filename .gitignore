@@ -5,13 +5,9 @@
 /src/.umi
 /src/.umi-production
 /src/.umi-test
+/.umi
+/.umi-production
+/.umi-test
 /dist
+/.mfsu
 .swc
-*.md
-!README.md
-!README-en_US.md
-*.log
-.env
-!.husky
-!.husky/_
-!.husky/_/*
