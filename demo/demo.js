@@ -1,25 +1,23 @@
-// new Promise((resolve) => {
-//   console.log(1)
-//   // resolve()
-// }).then(() => {
-//   console.log(2)
-// })
+let i = 0;
+setTimeout(() => {
+  console.log('log setTimeout');
+});
 
-const fn = () => {
-  // return 1
-
-  return new Proxy(
-    { a: 1 },
-    {
-      get: () => {
-        console.log('123');
-      },
-    },
-  );
+const test = () => {
+  console.log('test');
+  i++;
+  return Promise.resolve().then(() => {
+    if (i < 10) {
+      test();
+    }
+  });
 };
-(async () => {
-  // const bb = new Promise()
-  // console.log(JSON.stringify(bb))
-  const a = await fn();
-  console.log(a);
-})();
+
+test();
+
+// console.log(s);
+// var s = 'hello';
+// function s () {
+//   return 'hi';
+// }
+// console.log(s);
